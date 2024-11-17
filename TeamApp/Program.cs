@@ -15,6 +15,7 @@ namespace TeamApp
         {
             var members = new List<Member>();
 
+
             Console.Write("Enter cout of team members, value shoud be greater than '0': ");
             var membersCount = Convert.ToInt32(Console.ReadLine()) - 1;
 
@@ -94,9 +95,28 @@ namespace TeamApp
                     var age = Convert.ToInt32(Console.ReadLine());
                     Console.Write($"Enter programing language name which using team member number {i + 1}: ");
                     var programingLanguage = Console.ReadLine();
-                    Console.Write($"Enter 'YES' if team member number {i + 1} is on full time contract and 'NO' if not: ");
-                    var contractType = Console.ReadLine().ToLower();
-                    var isFulltime = contractType == "yes" ? true : false;
+                    Console.Write($"Enter 'YES' if team member number {i + 1} is full-time contract and 'NO' if not: ");
+                    var contractType = Console.ReadLine()?.Trim().ToLower();
+                    var isFulltime = false;
+
+                    while (true)
+                    {
+                        if (contractType == "yes")
+                        {
+                            isFulltime = true;
+                            break;
+                        }
+                        else if (contractType == "no")
+                        {
+                            isFulltime = false;
+                            break;
+                        }
+                        else
+                        {
+                            Console.Write("Invalid input. Please enter a valid answer ('YES' or 'NO'): ");
+                            contractType = Console.ReadLine()?.Trim().ToLower();
+                        }
+                    }
 
                     members.Add(new Member(name, age, programingLanguage, isFulltime));
                 }
