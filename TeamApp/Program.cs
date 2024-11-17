@@ -91,16 +91,28 @@ namespace TeamApp
                 {
                     Console.Write($"Enter the name of team member number {i + 1} : ");
                     var name = Console.ReadLine();
-                    Console.Write($"Enter the age of team member number {i + 1} : ");
-                    var age = Convert.ToInt32(Console.ReadLine());
+                    int age; // Питання: якщо заюати ВАР то вибиває помилку, тому що тре ініціалізувати, щоб компілятор розумів який то тип. Яке рішення краще ? Це чи var = 0;
+
+                    while (true)
+                    {
+                        Console.Write($"Enter the age of team member number {i + 1}: ");
+
+                        if (int.TryParse(Console.ReadLine(), out age) && age > 0 && age < 100)
+                        {
+                            break;
+                        }
+
+                        Console.WriteLine("Invalid input. Please enter a valid age (from 1 to 99).");
+                    }
                     Console.Write($"Enter programing language name which using team member number {i + 1}: ");
                     var programingLanguage = Console.ReadLine();
-                    Console.Write($"Enter 'YES' if team member number {i + 1} is full-time contract and 'NO' if not: ");
-                    var contractType = Console.ReadLine()?.Trim().ToLower();
                     var isFulltime = false;
 
                     while (true)
                     {
+                        Console.Write($"Enter 'YES' if team member number {i + 1} is full-time contract and 'NO' if not: ");
+                        var contractType = Console.ReadLine()?.Trim().ToLower();
+
                         if (contractType == "yes")
                         {
                             isFulltime = true;
@@ -111,11 +123,8 @@ namespace TeamApp
                             isFulltime = false;
                             break;
                         }
-                        else
-                        {
-                            Console.Write("Invalid input. Please enter a valid answer ('YES' or 'NO'): ");
-                            contractType = Console.ReadLine()?.Trim().ToLower();
-                        }
+
+                        Console.WriteLine("Invalid input. Please enter a valid answer ('YES' or 'NO').");
                     }
 
                     members.Add(new Member(name, age, programingLanguage, isFulltime));
