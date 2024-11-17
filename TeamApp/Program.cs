@@ -86,12 +86,6 @@ namespace TeamApp
                     maxIteration = members.Count + membersCount; // 2+1 = 3
                 }
 
-                Console.WriteLine();
-                Console.WriteLine($"start position {startIteration}");
-                Console.WriteLine($"max count {maxIteration}");
-                Console.WriteLine($"Member count {membersCount}");
-                Console.WriteLine();
-
                 for (int i = startIteration; i <= maxIteration; i++)
                 {
                     Console.Write($"Enter the name of team member number {i + 1} : ");
@@ -115,15 +109,7 @@ namespace TeamApp
                 }
 
                 Console.WriteLine("\nMembers List:");
-                //for (int i = 0; i < members.Count; i++)
-                //{
-                //    var currentContractType = members[i].isFullTime ? "Full Time" : "Part Time";
-                //    Console.WriteLine($"The team member number {i+1} is {members[i].Name}, " +
-                //        $"Age is: {members[i].Age}, " +
-                //        $"Programing Language is: {members[i].ProgramingLanguage}, " +
-                //        $"Contract Type is: {currentContractType}");
-                //}
-
+                
                 foreach (var member in members)
                 {
                     var currentContractType = member.isFullTime ? "Full Time" : "Part Time";
