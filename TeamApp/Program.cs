@@ -14,20 +14,8 @@ namespace TeamApp
         static void Main(string[] args)
         {
             var members = new List<Member>();
-            int membersCount;            
-
-            while (true)
-            {
-                Console.Write("Enter cout of team members, value shoud be greater than '0': ");
-
-                if (int.TryParse(Console.ReadLine(), out membersCount) && membersCount > 0)
-                {
-                    break;
-                }
-
-                Console.WriteLine("Invalid input. Please enter a valid cout of team members (from 1 to infinity).");
-            }
-            
+            int membersCount = GetValidatedInput("Enter cout of team members, value shoud be greater than '0': ");
+                        
 
             Member.AddMember(members, membersCount);
             Member.ShowMembers(members);
@@ -91,22 +79,11 @@ namespace TeamApp
                     Console.Write($"Enter the name of team member number {i + 1} : ");
                     var name = Console.ReadLine();
 
-                    int age; // Питання: якщо заюати ВАР то вибиває помилку, тому що тре ініціалізувати, щоб компілятор розумів який то тип. Яке рішення краще ? Це чи var age = 0; то саме з var isFulltime = false; або bool isFulltime;
-
-                    while (true)
-                    {
-                        Console.Write($"Enter the age of team member number {i + 1}: ");
-
-                        if (int.TryParse(Console.ReadLine(), out age) && age > 0 && age < 100)
-                        {
-                            break;
-                        }
-
-                        Console.WriteLine("Invalid input. Please enter a valid age (from 1 to 99).");
-                    }
+                    var age = GetValidatedInput($"Enter the age of team member number {i + 1}: ", 100); 
+                    
                     Console.Write($"Enter programing language name which using team member number {i + 1}: ");
                     var programingLanguage = Console.ReadLine();
-                    var isFulltime = false;
+                    var isFulltime = false; // Питання: якщо заюати ВАР то вибиває помилку, тому що тре ініціалізувати, щоб компілятор розумів який то тип. Яке рішення краще ? var isFulltime = false; чи bool isFulltime;
 
                     while (true)
                     {
@@ -146,6 +123,23 @@ namespace TeamApp
                         $"years old, knows {member.ProgramingLanguage}" +
                         $" and works {currentContractType}");
                 }
+            }
+        }
+        static int GetValidatedInput(string prompt, int? max = null) // що це за оператор ?
+        {
+            int value;
+
+            while (true)
+            {
+                Console.Write(prompt);
+
+                if (int.TryParse(Console.ReadLine(), out value) && value > 0 && (max == null || value <= max))
+                {
+                    return value;
+                }
+
+                string rangeMessage = max != null ? $"between 1 and {max}" : $"from 1 to infinity: ";
+                Console.WriteLine($"Invalid input. Please enter a valid number ({rangeMessage}).");
             }
         }
     }
