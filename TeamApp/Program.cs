@@ -14,10 +14,20 @@ namespace TeamApp
         static void Main(string[] args)
         {
             var members = new List<Member>();
+            int membersCount;            
 
+            while (true)
+            {
+                Console.Write("Enter cout of team members, value shoud be greater than '0': ");
 
-            Console.Write("Enter cout of team members, value shoud be greater than '0': ");
-            var membersCount = Convert.ToInt32(Console.ReadLine()) - 1;
+                if (int.TryParse(Console.ReadLine(), out membersCount) && membersCount > 0)
+                {
+                    break;
+                }
+
+                Console.WriteLine("Invalid input. Please enter a valid cout of team members (from 1 to infinity).");
+            }
+            
 
             Member.AddMember(members, membersCount);
             Member.ShowMembers(members);
@@ -37,14 +47,12 @@ namespace TeamApp
                 }
                 else if (enteredKey.Key == ConsoleKey.A)
                 {
-                    Console.WriteLine("User clicked A");
                     Member.AddMember(members, 1, true);
-                    Console.WriteLine("Team members have been updated:");
+                    Console.WriteLine("\nTeam members have been updated:");
                     Member.ShowMembers(members);
                 }
                 else if (enteredKey.Key == ConsoleKey.P)
                 {
-                    Console.WriteLine("User clicked P");
                     Member.ShowMembers(members);
                 }
                 else
@@ -71,27 +79,19 @@ namespace TeamApp
 
             public static void AddMember(List<Member> members, int membersCount, bool isRecall = false)
             {
-                if (membersCount <= 0)
-                {
-                    Console.WriteLine("Please enter a valid value greater than 0.");
-                    return;
-                }
-                
-
-                var startIteration = members.Count; //0
-                var maxIteration = membersCount; //2
+                var maxIteration = membersCount;
 
                 if (isRecall)
                 {
-                    startIteration = members.Count + 1; // 2 + 1 = 3
-                    maxIteration = members.Count + membersCount; // 2+1 = 3
+                    maxIteration = members.Count + membersCount;
                 }
-
-                for (int i = startIteration; i <= maxIteration; i++)
+                
+                for (int i = members.Count; i < maxIteration; i++)
                 {
                     Console.Write($"Enter the name of team member number {i + 1} : ");
                     var name = Console.ReadLine();
-                    int age; // Питання: якщо заюати ВАР то вибиває помилку, тому що тре ініціалізувати, щоб компілятор розумів який то тип. Яке рішення краще ? Це чи var = 0;
+
+                    int age; // Питання: якщо заюати ВАР то вибиває помилку, тому що тре ініціалізувати, щоб компілятор розумів який то тип. Яке рішення краще ? Це чи var age = 0; то саме з var isFulltime = false; або bool isFulltime;
 
                     while (true)
                     {
